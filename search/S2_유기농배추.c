@@ -54,9 +54,8 @@ int main(void) {
 			add(inputs[i]);
 			do {
 				size--;
-				int * s = ts[size];
-				int loc[2] = {s[0], s[1]};
-				rem(s);
+				int * loc = ts[size];
+				rem(loc);
 				loc[0]++;
 				if(check(loc, 0)) {
 					add(loc);
@@ -80,3 +79,4 @@ int main(void) {
 		printf("%d\n", result);
 	}
 }
+
