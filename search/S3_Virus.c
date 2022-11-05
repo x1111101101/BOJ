@@ -13,7 +13,7 @@ int s[100] = {0,};
 int r = 0;
 int d[100] = {0,};
 
-// 재귀함수로 
+// 재귀함수로 탐색
 void reculsive(int p) {
 	d[p] = 1;
 	for(int i = 0; i<s[p]; i++) {
