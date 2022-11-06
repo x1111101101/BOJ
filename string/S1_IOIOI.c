@@ -31,7 +31,7 @@ int check(int i) {
 
 int main(void) {
 	scanf("%d %d", &k, &l);
-	str = malloc(sizeof(char) * l+1);
+	str = malloc(sizeof(char) * l);
 	scanf("%s", str);
 	int plen = 1+k*2;
 	for(int i = 0; i<=l-plen; i++) {
