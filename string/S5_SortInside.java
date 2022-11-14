@@ -9,7 +9,7 @@ import static java.lang.Character.*;
 
 /**
 1427번: 소트 인사이드
-아스키코드에서 숫자들은 이미 정렬된 상태기 때문에 파싱을 하지 않아도 
+아스키코드에서 숫자들은 이미 정렬된 상태기 때문에 파싱을 하지 않아도 됨
 */
 public class Main {
 
