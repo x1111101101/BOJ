@@ -5,36 +5,30 @@
 
 /**
 11660번: 구간 합 구하기
-시간복잡도가 다른 답안들 보다 3배정도 높았는데 왜 그런지 알 것 같다.
-수정해서 다시 커밋할 예정
+줄 단위로 저장하는 코드에서 면 단위로 저장하는 코드로 개선
+소요시간 3배 줄음
 */
-int n,m;
 
 int main(void) {
+	int n,m;
 	scanf("%d%d", &n, &m);
-	int sz = n*n;
-	int dp[sz+1];
-	dp[0] = 0;
-	for(int y = 0; y<n; y++) {
-		for(int x = 0; x<n; x++) {
-			scanf("%d", dp+y*n+x+1);
+	//int g[1025][1025];
+	int dp[1025][1025] = {0,};
+	int num;
+	for(int y = 1; y<=n; y++) {
+		int sum = 0;
+		for(int x = 1; x<=n; x++) {
+			scanf("%d", &num);
+			sum += num;
+			dp[x][y] = sum + dp[x][y-1];
 		}
 	}
-	for(int i = 1; i<=sz; i++) {
-		dp[i] += dp[i-1];
-	}
-	int loc[2][2];
-	for(int i = 0; i<m; i++) {
-		scanf("%d%d%d%d", loc[0]+1, loc[0], loc[1]+1, loc[1]);
-		for(int k = 0; k<4; k++) *(loc[0]+k) -= 1;
-		int result = 0;
-		//printf("%d, %d ~ %d, %d\n", loc[0][0], loc[0][1], loc[1][0], loc[1][1]);
-		for(int y = loc[0][1]; y<=loc[1][1]; y++) {
-			result += dp[y*n+loc[1][0]+1] - dp[y*n+loc[0][0]];
-			//printf("s %d\n", result);
-		}
+	while(m-- > 0) {
+		int x1,y1,x2,y2;
+		scanf("%d%d%d%d",&y1,&x1,&y2,&x2);
+		int result = dp[x2][y2] - dp[x2][y1-1] - dp[x1-1][y2];
+		result += dp[x1-1][y1-1];
 		printf("%d\n", result);
 	}
-	
 }
 
