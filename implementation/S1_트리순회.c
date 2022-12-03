@@ -41,7 +41,6 @@ int main(void) {
 		r -= 'A'; l -= 'A'; p -= 'A';
 		t[p][0] = l;
 		t[p][1] = r;
-		fflush(stdout);
 		getchar();
 	}
 	pre(0);
