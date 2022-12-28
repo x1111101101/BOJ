@@ -3,7 +3,8 @@
 
 
 /**
-그래프 최대 크기가 10*10이라 재귀로 돌려도 될줄 알았는데
+13460번: 구슬 탈출 2
+작은 실수 때매 오답 제출을 꽤 많이 한 문제다.
 */
 
 #define INF	(11)
@@ -16,21 +17,15 @@ int minDepth = INF;
 int len[2];
 char map[10][10];
 int visit[10][10][10][10]; // 빨강 위치, 파랑 위치
-int record[10][10][10][10];
 
 struct blocs {
 	int locs[2][2];
 };
 
-
 int hasvisit(int (*locs)[2], int depth) {
-	if(record[locs[0][0]][locs[0][1]][locs[1][0]][locs[1][1]] < depth) return 1;
 	return visit[locs[0][0]][locs[0][1]][locs[1][0]][locs[1][1]];
 }
 int setvisit(int (*locs)[2], int v, int depth) {
-	if(record[locs[0][0]][locs[0][1]][locs[1][0]][locs[1][1]] > depth) {
-		record[locs[0][0]][locs[0][1]][locs[1][0]][locs[1][1]] = depth;
-	}
 	visit[locs[0][0]][locs[0][1]][locs[1][0]][locs[1][1]] = v;
 }
 
@@ -46,15 +41,13 @@ struct blocs simulate(const int * o, int (*locs)[2]) {
 	}
 	int x = o[0];
 	int d = o[1];
-	int first;
-	if(locs[0][x]*d < locs[1][x]*d) {
-		first = 1;
-	} else {
+	int first = 1;
+	int ft[2] = {locs[0][0], locs[0][1]};
+	ft[x] += d;
+	if(ft[0] == locs[1][0] && ft[1] == locs[1][1]) {
 		first = 0;
 	}
-	int move[2] = {1,};
-	int cc = 0;
-	int opposit[2] = {1,0};
+	int move[2] = {1,1};
 	int hole = -1;
 	do {
 		first = !first;
@@ -78,8 +71,7 @@ struct blocs simulate(const int * o, int (*locs)[2]) {
 		move[first] = 1;
 	} while(move[0] || move[1]);
 	if(hole == 0) {
-		int t = !hole;
-		int *ll = l[t];
+		int *ll = l[1];
 		int flag = 0;
 		while(1) {
 			ll[x] += d;
@@ -97,23 +89,17 @@ struct blocs simulate(const int * o, int (*locs)[2]) {
 }
 
 int main(void) {
-	int * pr = record;
-	for(int i = 0; i<10000; i++) {
-		*(pr+i) = INF;
-	}
 	scanf("%d%d", len+1, len);
 	getchar();
-	int st[10000][2][2];
+	int st[11][2][2];
 	int (*locs)[2] = st[0];
 	for(int y = 0; y<len[1]; y++) {
 		for(int x = 0; x<len[0]; x++) {
 			scanf("%c", map[x]+y);
 			if(map[x][y] == 'R') {
-				map[x][y] = '.';
 				locs[0][0] = x;
 				locs[0][1] = y;
 			} else if(map[x][y] == 'B') {
-				map[x][y] = '.';
 				locs[1][0] = x;
 				locs[1][1] = y;
 			}
@@ -121,8 +107,7 @@ int main(void) {
 		getchar();
 	}
 	setvisit(locs, 1, 0);
-	
-	int os[10000];
+	int os[11];
 	os[0] = -1;
 	int sz = 1;
 	while(sz > 0) {
@@ -135,7 +120,7 @@ int main(void) {
 		}
 		int (*s)[2] = simulate(OFFSETS[o], l).locs;
 		if(!result) {
-			if(hasvisit(s, sz)) {
+			if(hasvisit(s, sz) || sz == 10) {
 				continue;
 			}
 			setvisit(s, 1, sz);
@@ -159,3 +144,24 @@ int main(void) {
 	if(minDepth >= INF) minDepth = -1;
 	printf("%d", minDepth);
 }
+
+/*
+4 5
+#####
+#.BR#
+#.O##
+#####
+
+3 6
+######
+#.ROB#
+######
+
+5 5
+#####
+#O..#
+#R..#
+#B..#
+#####
+
+*/
