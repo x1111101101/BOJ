@@ -29,7 +29,10 @@ int main(void) {
 	IRNG(i,1,n+1) {
 		IRNG(j,i,n+1) {
 			int v = s[j]-s[i-1];
-			if(v == m) ans++;
+			if(v == m) {
+				ans++;
+				break;
+			}
 		}
 	}
 	printf("%d", ans);
