@@ -26,7 +26,7 @@ int main(void) {
 	}
 	int pointer[2] = {len[0], len[1]};
 	int max = len[0] > len[1] ? 0 : 1;
-	while(pointer[!max] >= 0) {
+	while(pointer[!max] > 0) {
 		int a = str[max][pointer[max]] - '0';
 		int b = str[!max][pointer[!max]] - '0';
 		str[max][pointer[max]] = (a+b)%10 + '0';
