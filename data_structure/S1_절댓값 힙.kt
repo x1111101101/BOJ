@@ -3,7 +3,7 @@ import java.lang.Math.abs;
 
 /**
 11286번: 절댓값 힙
-Priority Queue를 직접 구현해서 
+Priority Queue를 직접 구현해서 해결해봤다.
 */
 
 class PQ {
