@@ -8,19 +8,25 @@
  * - arr의 누적합을 구함
  * - 0초 부터 (36만 - 광고 시간)초까지를 순회하면서 해당 초를 시작으로 정한 구간의 누적 시청 시간을 누적합을 이용해 O(1)로 구함.
  * - 누적 시청 시간 중 최초로 구한 최댓값을 정답값으로 선택
- * 
+ *
  * 시간 단축 방법
  * - 모든 구간을 순회하면서 arr에 1씩 증가시키는 로직은 최악의 경우 1000억회의 연산 발생
  * - 사용자의 재생 구간을 여는 괄호와 닫는 괄호로 해석
  *      (  (  ) ( ) )등의 꼴로 해석 가능
  * - 위치 별 괄호의 중첩 횟수를 구하면서 arr에 한번에 0~30만개의 값을 한번에 더함 - O(N)
  * - 시작 시간과 끝 시간 끼리의 중복이 있을 수 있음에 유의
- * 
+ *
  */
 
 
 class Solution {
-    
+
+    /**
+     * 구간의 시작 또는 종료 지점에 대한 정보를 담는 data class
+     * time: 시작 or 종료 시각
+     * count: 해당 시각에서의 중복 횟수
+     * isEnd: 시작/종료
+     */
     data class L(val time: Int, val count: Int, val isEnd: Boolean): Comparable<L> {
         override fun compareTo(other: L): Int {
             val c = this.time.compareTo(other.time)
@@ -34,7 +40,7 @@ class Solution {
 
     fun getSeconds(time: String): Int {
         val (h,m,s) = time.split(":").map { it.toInt() }
-        return h*3600 + m * 60 + s
+        return h * 3600 + m * 60 + s
     }
 
     fun toTimeString(t: Int): String {
@@ -62,7 +68,7 @@ class Solution {
         val arr = Array(playTime) {0}
         var dup = 0 // 중첩 횟수
         var left = 0
-        for(s in sorted) {
+        for(s in sorted) { // 괄호 해석
             if(s.isEnd) {
                 for(i in left until s.time) {
                     arr[i] += dup
@@ -77,16 +83,15 @@ class Solution {
             arr[s.time] += s.count
             left = s.time+1
             dup += s.count
-
         }
         val acc = Array(arr.size+1) {0L}
         acc[0] = arr[0].toLong()
-        for(i in 1 until acc.size) {
+        for(i in 1 until acc.size) { // 누적합 구하기
             acc[i] = acc[i-1] + arr[i-1]
         }
         var ans = 0L
         var startAns = -60
-        for(start in 1 ..acc.size-adTime) {
+        for(start in 1 ..acc.size-adTime) { // 정답 구하기
             val end = start + adTime-1
             val sum = acc[end] - (acc[start-1])
             if(ans < sum) {
