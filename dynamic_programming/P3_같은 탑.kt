@@ -17,7 +17,6 @@ fun main() = with(System.`in`.bufferedReader()){
             if(g == 0) return 0
             return inf
         }
-        if(g < 0) return inf
         if(memo[i][g] != empty) return memo[i][g]
         val h = height[i]
         var ans = dp(i-1, g)
