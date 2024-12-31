@@ -16,11 +16,6 @@ import kotlin.math.min
 class Node(val id: Int) {
     val outEdges = HashSet<Node>() // to
     val inEdges = LinkedList<Node>() // from
-    //val mergedNodeIds = LinkedList<Int>()
-
-    var money = 0
-    var restaurant = false
-    var isStart = false
 
     override fun hashCode(): Int = id
 }
@@ -38,9 +33,6 @@ class Graph(val nodeSize: Int) {
             val node = Node(id++)
             group.forEach {
                 sccNodes[it.id] = node
-                node.money += it.money
-                node.restaurant = it.restaurant || node.restaurant
-                node.isStart = it.isStart || node.isStart
             }
             newNodes += node
         }
