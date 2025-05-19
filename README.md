@@ -1,5 +1,5 @@
 # BOJ
-Backjun Online Judge.
+Baekjoon Online Judge.
 https://solved.ac/profile/x1111101101/solved?sort=level&direction=desc&page=1
 
 ## Prefix
